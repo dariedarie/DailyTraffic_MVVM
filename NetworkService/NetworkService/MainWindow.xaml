@@ -1,0 +1,42 @@
+﻿<Window x:Class="NetworkService.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NetworkService"
+        xmlns:viewModel="clr-namespace:NetworkService.ViewModel"
+        xmlns:views="clr-namespace:NetworkService.Views"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="680.289" Width="752.644">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:NetworkEntitiesViewModel}">
+            <views:NetworkEntitiesView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:NetworkDisplayViewModel}">
+            <views:NetworkDisplayView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:GraphViewModel}">
+            <views:GraphView/>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid Background="Yellow">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="5">
+            <Menu  ToolTip="Meni" DockPanel.Dock="Top" FontStyle="Italic">
+                <MenuItem Header="NetworkEntities" Command="{Binding NavCommand}"
+                          CommandParameter="entity"/>
+                <MenuItem Header="NetworkDisplay" Command="{Binding NavCommand}"
+                          CommandParameter="display"/>
+                <MenuItem Header="Graph" Command="{Binding NavCommand}"
+                          CommandParameter="graph"/>
+            </Menu>
+        </DockPanel>
+        <Grid Grid.Row="1">
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </Grid>
+    </Grid>
+</Window>

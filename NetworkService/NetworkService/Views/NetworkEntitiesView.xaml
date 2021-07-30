@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="NetworkService.Views.NetworkEntitiesView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NetworkService.Views"
+      xmlns:data="clr-namespace:NetworkService.Model"
+      mc:Ignorable="d"  Height="680.289" Width="752.644">
+    <Grid HorizontalAlignment="Left" Width="743" RenderTransformOrigin="0.483,0.45">
+        <Label Content="ID:" HorizontalAlignment="Left" Margin="103,451,0,0" VerticalAlignment="Top" Width="65"/>
+        <Label Content="Naziv:" HorizontalAlignment="Left" Margin="93,497,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.579,0.628" Width="65"/>
+        <Label Content="Tip:" HorizontalAlignment="Left" Margin="103,554,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.564,0.385" Width="55"/>
+        <TextBox ToolTip="Prostor za upis ID-a"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" HorizontalAlignment="Left" Height="23" Margin="194,454,0,0" TextWrapping="Wrap" Text="{Binding CurrentRoad.Id, Mode=TwoWay}" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.492,0.319"/>
+        <TextBox ToolTip="Prostor za upis naziva"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" HorizontalAlignment="Left" Height="23" Margin="194,507,0,0" TextWrapping="Wrap" Text="{Binding CurrentRoad.Naziv, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
+        <ComboBox  ToolTip="Odabir tipa"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" HorizontalAlignment="Left" Margin="194,556,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Path=RoadTypes}" SelectedItem="{Binding CurrentRoad.Izbor}"/>
+        <Button ToolTip="Dugme za dodavanje entiteta u tabelu"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" Content="Dodaj" HorizontalAlignment="Left" Margin="486,439,0,0" VerticalAlignment="Top" Width="108" Command="{Binding AddRoadCommand}" RenderTransformOrigin="0.534,0.467"/>
+        <Button ToolTip="Dugme za brisanje entiteta iz tabela"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" Content="Obrisi" HorizontalAlignment="Left" Margin="486,482,0,0" VerticalAlignment="Top" Width="108" Command="{Binding DeleteRoadCommand}"/>
+        <ComboBox  ToolTip="Odaberi tip"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" HorizontalAlignment="Left" Margin="127,46,0,0" VerticalAlignment="Top" Width="120"  ItemsSource="{Binding Path=RoadTypes}" SelectedItem="{Binding FilterRoad.Izbor, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Content="TipFilter:" HorizontalAlignment="Left" Height="39" Margin="54,42,0,0" VerticalAlignment="Top" Width="68" RenderTransformOrigin="0.48,0.496"/>
+        <Label Content="ID" HorizontalAlignment="Left" Margin="311,42,0,0" VerticalAlignment="Top" Width="21"/>
+        <RadioButton ToolTip="Cekiraj vece od unesenog ID-a"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" Content="+" HorizontalAlignment="Left" Margin="350,40,0,0" VerticalAlignment="Top"  IsChecked="True" Height="16" RenderTransformOrigin="0.5,0.5" Width="28"/>
+        <RadioButton  ToolTip="Cekiraj manje od unesenog ID-a"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" Content="-"  HorizontalAlignment="Left" Margin="350,60,0,0" VerticalAlignment="Top" Width="40"  IsChecked="{Binding IsChecked}"/>
+        <TextBox ToolTip="Prostor za unos ID-a"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" HorizontalAlignment="Left" Height="23" Margin="412,51,0,0" TextWrapping="Wrap" Text="{Binding FilterText}" VerticalAlignment="Top" Width="117"   />
+        <Button ToolTip="Dugme akcije filtriranja"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" Content="Filtriraj" HorizontalAlignment="Left" Margin="573,52,0,0" VerticalAlignment="Top" Width="105" RenderTransformOrigin="-0.218,0.638" Height="22" Command="{Binding FilterRoadCommand}"/>
+        <TextBlock HorizontalAlignment="Left" Margin="194,428,0,0" TextWrapping="Wrap" Text="{Binding CurrentRoad.ValidationErrors[Id]}" VerticalAlignment="Top" Width="120" Foreground="Red" Height="21"/>
+        <TextBlock HorizontalAlignment="Left" Margin="194,486,0,0" TextWrapping="Wrap" Text="{Binding CurrentRoad.ValidationErrors[Naziv]}" VerticalAlignment="Top" Width="120" Foreground="Red"/>
+        <TextBlock HorizontalAlignment="Left" Margin="194,535,0,0" TextWrapping="Wrap" Text="{Binding CurrentRoad.ValidationErrors[Tip]}" VerticalAlignment="Top" Width="120" Foreground="Red" RenderTransformOrigin="0.481,0.688"/>
+
+        <DataGrid  ToolTip="Tabela entiteta"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" HorizontalAlignment="Left" Height="283"  VerticalAlignment="Top" Width="678"
+            ItemsSource="{Binding RoadsTemp}"
+				BorderBrush="Black"
+				Background="White"
+				Foreground="Black"
+				CanUserAddRows="True"
+				CanUserDeleteRows="False"
+				SelectionMode="Single"
+				CanUserResizeColumns="False"
+				IsReadOnly="True"
+				AutoGenerateColumns="False"
+				HeadersVisibility="Column"
+				SelectedItem="{Binding SelectedRoad, UpdateSourceTrigger=PropertyChanged}" Margin="34,118,0,0">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Width="*" Binding="{Binding Id}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Naziv}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Type" Width="60" Binding="{Binding Izbor}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Value" Width="50" Binding="{Binding Value}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Image" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Height="50" Width="50" Source="{Binding Slika}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button ToolTip="Filtriraj samo po tipu"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" Content="FiltrirajTip" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="144,73,0,0" Command="{Binding FilterRoadTypeCommand}"/>
+        <Button ToolTip="Dugme za gasenje ToolTip-a"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" Command="{Binding UgasiToolTipCommand}" Content="UgasiToolTip" HorizontalAlignment="Left" Margin="623,554,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button   ToolTip="Pomoc oko filtriranja"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" Content="HelperFilter" Command="{Binding Helper2Command}" HorizontalAlignment="Left" Margin="587,79,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button   ToolTip="Pomoc"  ToolTipService.IsEnabled="{Binding UgasiToolTip}" Content="Helper" Command="{Binding HelperCommand}" HorizontalAlignment="Left" Margin="623,471,0,0" VerticalAlignment="Top" Width="75" Height="51"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="350,471,0,0" VerticalAlignment="Top" Width="100"/>
+
+    </Grid>
+</UserControl>
